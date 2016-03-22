@@ -1,0 +1,41 @@
+Release 0: Equip Your New Robot
+It's the year 2030, and you've finally acquired a Personal Robot to do your bidding. Huzzah!
+
+Unfortunately, your robot doesn't know how to use an elevator.
+
+Write the algorithm for using an elevator. Remember, robots are not smart at all, so you'll have to spell everything out.
+
+For instance, how will your robot figure out which floor button to press?
+
+Outside of the elevator:
+- The robot asks if I want to go up or down.
+  -If I say UP, it presses the UP button
+  -Or if I say DOWN, it presses the DOWN button.
+
+Once it sees the elevator door open, it walks inside. 
+While inside the elevator:
+
+- I tell the robot that the door is closed.
+   - When it hears this, the robot asks me “what floor number?” 
+   - Depending on the number I say, the robot will now press the button associated with that number.
+   - When it sees the door open, the robot now walks out of the elevator.
+
+
+
+Release 1: Find a Real-Life Algorithm
+You're a smart human, not a dumb computer. That means you likely follow algorithms on a daily basis without even knowing it, taking your astonishing abilities completely for granted.
+
+Come up with an example of a common task in your life that could be translated into an algorithm, and write out the steps in algorithms.txt (labeled with the name of the task).
+
+TASK - “Putting on a Shirt - Correctly”
+
+- hold shirt
+- make sure tag is inside shirt (not outside of it)
+  - if tag is outside, manipulate the shirt until tag is inside
+- find biggest hole in shirt
+- put your head inside the biggest hole of the shirt
+- then put your head inside the second biggest hole of the shirt
+- make sure tag is now located behind you
+  - if tag is in front of you, manipulate shirt (while with head inside both the biggest hole, and second hole still) until it is behind you
+- put your right arm thru the biggest hole, and find the 3rd smallest hole, that is closest to your right side, and put it in that hole
+- put your left arm thru the biggest hole, and find the 3rd smallest hole, that is closest to the left side, and put it in that hole
