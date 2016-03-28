@@ -44,7 +44,8 @@ enc_or_decrypt = gets.chomp.downcase
 puts "What word would you like to #{enc_or_decrypt}?"
 word = gets.chomp
 if enc_or_decrypt == "encrypt"
-  encrypt(word)
+  puts encrypt(word)
 elsif enc_or_decrypt == "decrypt"
-  decrypt(word)
+  puts decrypt(word)
+
 end
