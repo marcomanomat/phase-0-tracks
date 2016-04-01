@@ -10,11 +10,18 @@ puts "What is #{name}'s fur color?"
 puts "Is #{name} a good candidate for adoption?"
 	adoption = gets.chomp
 
+	if  adoption == "yes"
+		adoption = "is"
+	elsif adoption == "no"
+		adoption ="is not"
+	end
+
 puts "How old is #{name}? (in years)"
 	age = gets.chomp
+
 	if age == ""
-	age = nil
+		age = nil
 	end
 
 puts "The hamster's name is #{name}. On a scale from 1-10, #{name}'s volume is #{volume}."
-puts "#{name}'s fur color is #{color}. Is #{name} a good candidate for adoption?: #{adoption}. #{name} is #{age} years old."
+puts "#{name}'s fur color is #{color}. #{name} #{adoption} a good candidate for adoption!. #{name} is #{age} years old."
