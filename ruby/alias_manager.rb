@@ -5,16 +5,19 @@ def last_first(name)
 end
 
 def vowels_and_edges(letter)
+#vowels
 	return 'e' if letter == 'a'
 	return 'i' if letter == 'e'
 	return 'o' if letter == 'i'
 	return 'u' if letter == 'o'
 	return 'a' if letter == 'u'
+#edge cases
 	return 'b' if letter == 'z'
 	return 'f' if letter == 'd'
 	return 'j' if letter == 'h'
 	return 'p' if letter == 'n'
 	return 'v' if letter == 't'
+#next letter	
 	else 
 	letter.next
 end
