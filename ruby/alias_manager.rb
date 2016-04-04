@@ -1,7 +1,7 @@
 def last_first(name)
-  down_name = name.downcase
-  down_name = down_name.split(" ")
-  down_name.reverse.join(" ")
+  lower_case = name.downcase
+  lower_case = lower_case.split(" ")
+  lower_case.reverse.join(" ")
 end
 
 def vowels_and_edges(letter)
