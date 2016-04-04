@@ -21,13 +21,22 @@ p calculate(4,"/",4)
 
 puts "Hello, I am a calculator! Please punch in a calculation you would like me to solve!"
 puts "Please see this example as a format to use: '4 + 5'."
-user_calc = gets.chomp
+
 #p user_calc
-#calculate(user_calc)
-
-integer1 = user_calc[0].to_i
-integer2 = user_calc[4].to_i
-operator = user_calc[2].to_s
 
 
-p calculate(integer1,operator,integer2)
+	until "done" == true
+	user_calc = gets.chomp
+	if user_calc == "done"
+		finished = true
+		break if true
+	else
+	
+	integer1 = user_calc[0].to_i
+	integer2 = user_calc[4].to_i
+	operator = user_calc[2].to_s
+	user_input = calculate(integer1,operator,integer2)
+	p user_input
+
+end
+end
