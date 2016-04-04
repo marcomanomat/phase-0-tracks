@@ -36,8 +36,8 @@ def code_name(word)
 end
 
 
-
 puts "Please enter the name you would like to change (first and last name)."
+
 puts "Type 'quit' when you are completed."
 
 finished = false 
@@ -56,7 +56,7 @@ until finished == true
 
     list[entered_name] = capital_code_name 
 
-    puts "Please enter another name to be changed.  Enter 'quit' if finished."
+    puts "Please enter new name or type 'quit' if you are completed."
   end
 end
 
