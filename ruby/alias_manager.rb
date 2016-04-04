@@ -1,17 +1,10 @@
-#5.6 Solo Challenge: Manipulating Strings with Iteration
-
-#Release 0: Attempt a Tricky Algorithm
-#Pseudocode and write a method that takes a spy's real name and creates a fake name with it by:
-#1. Swapping the first and last name.
-#2. Changing all of the vowels (a, e, i, o, or u) to the next vowel in 'aeiou', and all of the consonants (everything else besides the vowels) to the next consonant in the alphabet. So 'a' would become 'e', 'u' would become 'a', and 'd' would become 'f'.
-
 def last_first(name)
   down_name = name.downcase
   down_name = down_name.split(" ")
   down_name.reverse.join(" ")
 end
 
-def vowel_and_edge(letter)
+def vowels_and_edges(letter)
 	return 'e' if letter == 'a'
 	return 'i' if letter == 'e'
 	return 'o' if letter == 'i'
@@ -26,32 +19,45 @@ else
 	letter.next
 end
 
-def fake_name(word)
+def code_name(word)
 	new_word = ""
 	i = 0
 	while i < word.length
-	char = word[i]
-	if char == ' '
+	letter = word[i]
+	if letter == ' '
 		new_word += ' '
 	else
-		 char == char.downcase
-		new_word += vowel_and_edge(char)
+		 letter == letter.downcase
+		new_word += vowels_and_edges(letter)
   end
   i += 1
   end
   new_word
 end
 
-puts "what is your name?"
-name = gets.chomp 
-last_first = last_first(name)
-fake_name = fake_name(last_first)
-capital_fake_name = fake_name.split.map(&:capitalize).join(" ")
-p "your fake name is #{capital_fake_name}!"
 
 
+puts "Please enter the name you would like to change (first and last name)."
+puts "Type 'quit' when you are completed."
 
+finished = false 
+list = {}
 
+until finished == true
+  entered_name = gets.chomp
+  if entered_name == "quit"
+    puts "Come back when you have more names!"
+    finished = true 
+  else
+	last_first = last_first(entered_name)
+	code_name = code_name(last_first)
+	capital_code_name = code_name.split.map(&:capitalize).join(" ")
+	p "Your code name is now: #{capital_code_name}"
 
+    list[entered_name] = capital_code_name 
 
+    puts "Please enter another name to be changed.  Enter 'quit' if finished."
+  end
+end
 
+list.each { |entered_name, capital_code_name| puts "#{entered_name} is also known by: '#{capital_code_name}'" }
