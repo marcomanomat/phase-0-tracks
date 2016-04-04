@@ -22,7 +22,7 @@ def vowels_and_edges(letter)
 	letter.next
 end
 
-#create looping method to loop through the string andvfind new characters to replace the old:
+#create looping method to loop through the string and find new characters to replace the old:
 def code_name(word)
 #set a new word to an empty string, we are going to fill it using the rest of the loop:
 	new_word = ""
@@ -30,7 +30,7 @@ def code_name(word)
 	i = 0
 #loop through the string:
 	while i < word.length
-#letter is going to be the index of the word put in, starting at the 0 position
+#letter is going to be the index of the word put in, starting at the 0 position until the end of the word's length
 	letter = word[i]
 #if a space is found, add a space to the new word
 		if letter == ' '
