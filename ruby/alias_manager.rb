@@ -15,23 +15,31 @@ def vowels_and_edges(letter)
 	return 'j' if letter == 'h'
 	return 'p' if letter == 'n'
 	return 'v' if letter == 't'
-else 
+	else 
 	letter.next
 end
 
+#create looping method to loop through the string andvfind new characters to replace the old:
 def code_name(word)
+#set a new word to an empty string, we are going to fill it using the rest of the loop:
 	new_word = ""
+#start index at 0
 	i = 0
+#loop through the string:
 	while i < word.length
+#letter is going to be the index of the word put in, starting at the 0 position
 	letter = word[i]
-	if letter == ' '
+#if a space is found, add a space to the new word
+		if letter == ' '
 		new_word += ' '
-	else
+#everything else, find the next letter or the next vowel or next edge case, and add it to the new word
+		else
 		 letter == letter.downcase
 		new_word += vowels_and_edges(letter)
-  end
-  i += 1
-  end
+  		end
+  		i += 1
+    end
+#should result in a new word, when all strings are pieced together   
   new_word
 end
 
