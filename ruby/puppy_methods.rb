@@ -27,9 +27,37 @@ class Puppy
 
 end
 
+=begin
 shishi = Puppy.new
 shishi.fetch("squeeky ball")
 shishi.speak(5)
 shishi.roll_over
 shishi.dog_years(7)
 shishi.sleep_whole_day
+=end
+
+class Kitten
+
+  def initialize
+  end
+
+  def ignore
+  	puts "*ignores you with ease*"
+  end
+
+  def speaks
+  	puts "meeoow" 
+  end
+  
+end
+
+fifty = [many = Kitten.new]*50
+
+fifty.each do many.ignore end
+fifty.each do many.speaks end
+
+
+
+
+
+
