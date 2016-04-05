@@ -80,3 +80,5 @@ p remove_item(last_example, "lemonade")
 p last_example
 update_quantity(last_example, "ice_cream", 1)
 print_list(example)
+
+### REFLECT
