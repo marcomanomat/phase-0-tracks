@@ -51,12 +51,28 @@ class Kitten
   
 end
 
+#updated correct logic
+fifty = []
+  i = 0
+  while i <= 50
+  fifty.push(Kitten.new)
+  i += 1
+end
+p fifty
+
+fifty.each { |kitten| 
+  kitten.ignore 
+  kitten.speaks
+}
+
+=begin
+#wrong/original logic:
 fifty = [many = Kitten.new]*50
 
 fifty.each do many.ignore end
 fifty.each do many.speaks end
-
-
+p fifty
+=end
 
 
 
