@@ -19,12 +19,12 @@ pass(to who)
 #Release 1: Write your Class
 
 class BasketballPlayer
-	attr_reader :name, :height
-	attr_accessor :best_skill
+	attr_reader :name
+	attr_accessor :best_skill, :rating
 
-	def initialize(name, height, best_skill)
+	def initialize(name, rating, best_skill)
 		@name = name
-		@height = height
+		@rating = rating
 		@best_skill = best_skill
 		puts "Please welcome #{@name} - he has one heluva #{@best_skill} game!"
 	end
@@ -46,7 +46,7 @@ end
 #####DRIVER_CODE!
 
 #DRIVER CODE FOR RELEASE1 
-lebron = BasketballPlayer.new("LeBron James", 80, "all-around")
+lebron = BasketballPlayer.new("LeBron James", 97, "all-around")
 lebron.shoot(3)
 lebron.dribble(12)
 lebron.pass("Kyrie") 
@@ -55,4 +55,5 @@ puts "#{lebron.name} is s'nice!"
 #attr_accessor:
 lebron.best_skill = "passing"
 p lebron.best_skill
-
+lebron.rating = 98
+p lebron.rating
