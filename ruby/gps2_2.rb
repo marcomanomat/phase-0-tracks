@@ -32,9 +32,7 @@
 def create_list(str)
   groc_list = {}
   str_array = str.split(' ')
-  str_array.each do |item| 
-    groc_list[item] = 1
-  end
+  str_array.each do |item| groc_list[item] = 1 end
   p groc_list
 end
 
@@ -82,3 +80,8 @@ update_quantity(last_example, "ice_cream", 1)
 print_list(example)
 
 ### REFLECT
+
+
+
+
+
