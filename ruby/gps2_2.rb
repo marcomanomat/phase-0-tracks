@@ -1,10 +1,10 @@
 # Method to create a list
 # input: string of items separated by spaces (example: "carrots apples cereal pizza")
 # steps: 
-  # Create a new hash
-  # Write a method to assign words in string to hash keys
-  # Assign values to each key
-  # set default quantity
+  # Initialize/Def a new METHOD that creates a new list that takes a string of items
+  # Create/initialize a new HASH (that will eventually hold list with quantity)
+  # Assign string of items into an ARRAY
+  # Set default quantity of (1) to each of ARRAY's item while assigning it to the HASH
   # print the list to the console [can you use one of your other methods here?]
 # output: hash 
 
@@ -29,11 +29,11 @@
 # output: Printed out sentences of items and quantities
 
 
-def create_list(str)
-  groc_list = {}
-  str_array = str.split(' ')
-  str_array.each do |item| groc_list[item] = 1 end
-  p groc_list
+def new_list(string)
+  list_hash = {}
+  list_array = string.split(" ")
+  list_array.each {|item| list_hash[item] = 1}
+  p list_hash
 end
 
 def add_item(input_list, input_item, input_quantity)
@@ -56,28 +56,28 @@ def print_list(list)
 end
 
 #### DRIVER CODE
-example_list = "carrots apples cereal pizza"
-example = create_list(example_list)
+example_string = "carrots apples cereal pizza"
+example_list = new_list(example_string)
 # add_item(example_list, "bananas", 7)
 
 
 
-another_list = "blue, red, green"
-another_example = create_list(another_list)
-add_item(another_example, "brown", 2)
-remove_item(another_example, "green")
-print_list(example)
-update_quantity(example, "apples", 2)
+second_string = "blue, red, green"
+second_example_list = new_list(second_string)
+add_item(second_example_list, "brown", 2)
+remove_item(second_example_list, "green")
+print_list(example_list)
+update_quantity(example_list, "apples", 2)
 
-last_list = "lemonade tomatoes onions ice_cream"
-last_example = create_list(last_list)
-update_quantity(last_example, "lemonade", 2)
-update_quantity(last_example, "tomatoes", 3)
-update_quantity(last_example, "ice_cream", 4)
-p remove_item(last_example, "lemonade")
-p last_example
-update_quantity(last_example, "ice_cream", 1)
-print_list(example)
+third_string = "lemonade tomatoes onions ice_cream"
+third_example_list = new_list(third_string)
+update_quantity(third_example_list, "lemonade", 2)
+update_quantity(third_example_list, "tomatoes", 3)
+update_quantity(third_example_list, "ice_cream", 4)
+p remove_item(third_example_list, "lemonade")
+p third_example_list
+update_quantity(third_example_list, "ice_cream", 1)
+print_list(example_list)
 
 ### REFLECT
 
