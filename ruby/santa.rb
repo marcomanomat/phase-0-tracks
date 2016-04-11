@@ -41,10 +41,39 @@ class Santa
 end
 
 
+example_genders = ["agender", "female", "bigender", "male", "female", "gender fluid", "N/A"]
+example_ethnicities = ["black", "Latino", "white", "Japanese-African", "prefer not to say", "Mystical Creature (unicorn)", "N/A"]
+
+puts "Would you like to create a new Santa? (Y/N)"
+answer = ""
+santa_list = []
+
+until answer == "N"
+	answer = gets.chomp.upcase
+	if answer == "N"
+		break
+	elsif answer == "Y"
+		santa = Santa.new(example_genders.sample, example_ethnicities.sample)
+		santa.age = rand(0..140)
+		puts "This Santa is a #{santa.ethnicity}, #{santa.gender}, and #{santa.age} year(s) old."
+		santa_list << "#{santa.ethnicity}, #{santa.gender}, #{santa.age}"
+	else
+		puts "Error.  Please try again."
+	end
+	puts "Would you like to create another Santa? (Y/N)"
+end
+
+#puts
+#puts santa_list
+
+
+
+
+=begin
 santa1 = Santa.new("male", "American")
 puts "this Santa's gender is #{santa1.gender} and he is #{santa1.ethnicity}!"
 p santa1.celebrate_birthday
-
+=end
 
 
 =begin
