@@ -11,7 +11,7 @@ class Puppy
   end
 
   def speak(number)
-    number.times do puts "Woof!" end
+    number.times { puts "Woof!" }
   end
 
   def roll_over
@@ -19,7 +19,7 @@ class Puppy
   end
 
   def dog_years(human_years)
-     return 11 * human_years
+     p 7 * human_years
   end
 
   def sleep_whole_day
@@ -33,7 +33,7 @@ shishi = Puppy.new
 shishi.fetch("squeeky ball")
 shishi.speak(5)
 shishi.roll_over
-shishi.dog_years(7)
+shishi.dog_years(3)
 shishi.sleep_whole_day
 
 
@@ -52,17 +52,18 @@ class Kitten
   
 end
 
-#updated correct logic
-fifty_kittens = []
+#updated correct logic:
+fifty = []
 #since we know how many times we're going to iterate/loop, we use the .times loop
-50.times { fifty_kittens << (Kitten.new) }
+50.times { fifty << Kitten.new }
 
-fifty_kittens.each do |kitten| 
+fifty.each do |kitten| 
   kitten.ignore 
   kitten.speaks
 end
 
 =begin
+
 #wrong/original logic:
 fifty = [many = Kitten.new]*50
 fifty.each do many.ignore end
@@ -70,10 +71,12 @@ fifty.each do many.speaks end
 p fifty
 
 #We can also use though: 
+fifty = []
   while i <= 50
-  fifty_kittens << (Kitten.new)
+  fifty << (Kitten.new)
   i += 1
   end
+
 =end  
 
 
