@@ -9,6 +9,8 @@
 require_relative 'state_data'
 
 class VirusPredictor
+#added attr reader, to simplify and eliminate some of the overuse of instance variables
+  attr_reader :population_density, :population, :state
 #initializes each instance with state, population density, and population variables
   def initialize(state_of_origin, population_density, population)
     @state = state_of_origin
@@ -23,26 +25,24 @@ class VirusPredictor
   end
 
   private
+
+#created additional methods to simplify the number of actions on single methods
+#refactor to case/when statements
+  def death_multiplier
+    case population_density
+    when 0...50 then 0.05
+    when 50...100 then 0.1
+    when 100...150 then 0.2
+    when 150...200 then 0.3
+    else 0.4
+    end
+  end
+
 #calculates the number of deaths based on pop density and population
 #got rid of original arguments because they were not needed due to the scope and power of instance variables.
   def predicted_deaths
-    # predicted deaths is solely based on population density (DBC's original comment)
-    #dec is short for decimal/float
-    if @population_density >= 200
-      dec = 0.4
-    elsif @population_density >= 150
-      dec = 0.3
-    elsif @population_density >= 100
-      dec = 0.2
-    elsif @population_density >= 50
-      dec = 0.1
-    else
-      dec = 0.05
-    end
-    number_of_deaths = (@population * dec).floor
-
-    print "#{@state} will lose #{number_of_deaths} people in this outbreak"
-
+    death_toll = (population * death_multiplier).floor
+    print "#{state} will lose #{death_toll} people in this outbreak"
   end
 #gives corresponding speed for pop density 
 #got rid of original arguments because they were not needed due to the scope and power of instance variables.
@@ -89,9 +89,11 @@ alaska.virus_effects
 
 #Release 5: Implement a new feature - Create report for all 50 states
 STATE_DATA.each do |key, value| 
-states = VirusPredictor.new(key, value[:population_density], value[:population])
-states.virus_effects
-end
+    states = VirusPredictor.new(key, value[:population_density], value[:population])
+    states.virus_effects
+    end
+
+
 
 #=======================================================================
 # Reflection Section
