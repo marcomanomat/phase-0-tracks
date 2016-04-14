@@ -1,11 +1,11 @@
 # Virus Predictor
 
-# I worked on this challenge [by myself, with: ].
-# We spent [#] hours on this challenge.
+# I worked on this challenge [with: Adrian S. Tran].
+# We spent [] hours on this challenge.
 
 # EXPLANATION OF require_relative
-#
-#
+#Accesses file in the same working directory to use as reference.
+
 require_relative 'state_data'
 
 class VirusPredictor
@@ -16,6 +16,7 @@ class VirusPredictor
     @population_density = population_density
   end
 #takes the instance variables as arguments for predicted_deaths and speed_of_spread
+#got rid of original arguments because they were not needed due to the scope and power of instance variables.
   def virus_effects
     predicted_deaths
     speed_of_spread
@@ -23,24 +24,28 @@ class VirusPredictor
 
   private
 #calculates the number of deaths based on pop density and population
+#got rid of original arguments because they were not needed due to the scope and power of instance variables.
   def predicted_deaths
-    # predicted deaths is solely based on population density
+    # predicted deaths is solely based on population density (DBC's original comment)
+    #dec is short for decimal/float
     if @population_density >= 200
-      number_of_deaths = (@population * 0.4).floor
+      dec = 0.4
     elsif @population_density >= 150
-      number_of_deaths = (@population * 0.3).floor
+      dec = 0.3
     elsif @population_density >= 100
-      number_of_deaths = (@population * 0.2).floor
+      dec = 0.2
     elsif @population_density >= 50
-      number_of_deaths = (@population * 0.1).floor
+      dec = 0.1
     else
-      number_of_deaths = (@population * 0.05).floor
+      dec = 0.05
     end
+    number_of_deaths = (@population * dec).floor
 
     print "#{@state} will lose #{number_of_deaths} people in this outbreak"
 
   end
 #gives corresponding speed for pop density 
+#got rid of original arguments because they were not needed due to the scope and power of instance variables.
   def speed_of_spread #in months
     # We are still perfecting our formula here. The speed is also affected
     # by additional factors we haven't added into this functionality.
