@@ -61,12 +61,14 @@ Herb.result
 
 ### USER INTERFACE ###
 puts "Let's create a team!"
+###############
 user_input = ""
 team = []
-
+###############
 while user_input != "N"
-	puts "Do you want to add a new player? (Y or N)."
-		user_input = gets.chomp.upcase
+
+puts "Do you want to add a new player? (Y or N)."
+user_input = gets.chomp.upcase
 
 	if user_input == "Y"
 
