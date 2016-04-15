@@ -19,7 +19,7 @@ class BasketballPlayer
 	end
 
 	def bio
-		puts "#{name} is created!"
+		puts "\n#{name} is created!"
 		puts "shooting rating is: #{shoot_rating}"
 		puts "pass rating is: #{pass_rating}"
 		puts "dribble rating is: #{dribble_rating}"
@@ -66,15 +66,20 @@ team = []
 
 while user_input != "N"
 	puts "Do you want to add a new player? (Y or N)."
-		user_input = gets.chomp.capitalize
+		user_input = gets.chomp.upcase
 
 	if user_input == "Y"
 
 		puts "What is the name of your player?"
-		name = gets.chomp
+		name = gets.chomp.capitalize
 
 		puts "What is #{name}'s shooting rating (1-100)?"
 		shoot_rating = gets.to_i
+
+			unless shoot_rating.between?(1,100)
+				puts "Please enter a shooting rating between 1-100."
+				shoot_rating = gets.chomp.to_i
+			end
 
 		puts "What is #{name}'s passing rating (1-100)?"
 		pass_rating = gets.to_i
@@ -87,12 +92,10 @@ while user_input != "N"
 		team << created_player
 
 	elsif user_input == "N"
-		puts ""
-		puts "TEAM CONSISTS OF:"
+		puts "\nTEAM CONSISTS OF:"
 
 			team.each do |player|
-			puts ""
-			puts "#{player.bio}"
+			puts "\n#{player.bio}"
 			end
 	break
 		
