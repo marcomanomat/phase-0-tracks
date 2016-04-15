@@ -3,57 +3,101 @@
 =begin
 Release 0: Design a Class
 
-class BasketballPlayer
-
-#3 Attributes/Characteristics
-name - string
-height (in inches) - integer
-Best Basketball Related Quality - string
-
-#3 Methods
-shoot(how far)
-dribble(to where)
-pass(to who)
+class: Basketball Player
+attributes: name, ratings (shoot, pass, dribble)
+methods: shoot, pass, dribble
 =end
 
-#Release 1: Write your Class
-
 class BasketballPlayer
-	attr_reader :name
-	attr_accessor :best_skill, :rating
+	attr_reader :shoot_rating, :pass_rating, :dribble_rating, :name
 
-	def initialize(name, rating, best_skill)
+	def initialize(name, shoot_rating, pass_rating, dribble_rating)
 		@name = name
-		@rating = rating
-		@best_skill = best_skill
-		puts "Please welcome #{@name} - he has one heluva #{@best_skill} game!"
+		@shoot_rating = shoot_rating
+		@pass_rating = pass_rating
+		@dribble_rating = dribble_rating
 	end
 
-	def shoot(how_far)
-		puts "#{@name} shoots from #{how_far} feet away!"
+	def bio
+		puts "#{name} is created!"
+		puts "shooting rating is: #{shoot_rating}"
+		puts "pass rating is: #{pass_rating}"
+		puts "dribble rating is: #{dribble_rating}"
 	end
 
-	def dribble(how_long)
-		puts "#{@name} dribbles for #{how_long} seconds!"
+	def shoot
+		case shoot_rating
+		when 0...50 then "#{@name} shoots: *CLANK!*"
+		when 50...100 then "#{@name} shoots: *SHWOOSH!*"
+		end
 	end
-
-	def pass(to_who)
-		puts "#{@name} passes to #{to_who}!"
+	def pass
+		case pass_rating
+		when 0...50 then "#{@name} passes: *Out of bounds!*"
+		when 50...100 then "#{@name} passes: *Threads the needle!*"
+		end
+	end
+	def dribble
+		case dribble_rating
+		when 0...50 then "#{@name} dribbles: *Cookied!*"
+		when 50...100 then "#{@name} dribbles: *Breaks opponent's ankles!*"
+		end
+	end
+	def result
+		actions = [shoot, pass, dribble]
+		random = actions.sample
+		p random
 	end
 end
 
+### DRIVER CODE  ####
+=begin
+Curry = BasketballPlayer.new("Curry", 96, 91, 94)
+Curry.result
+Herb = BasketballPlayer.new("Herb", 3, 4, 23)
+Herb.result
+=end
 
-#####DRIVER_CODE!
 
-#DRIVER CODE FOR RELEASE1 
-lebron = BasketballPlayer.new("LeBron James", 97, "all-around")
-lebron.shoot(3)
-lebron.dribble(12)
-lebron.pass("Kyrie") 
-#attr_reader:
-puts "#{lebron.name} is s'nice!"
-#attr_accessor:
-lebron.best_skill = "passing"
-p lebron.best_skill
-lebron.rating = 98
-p lebron.rating
+### USER INTERFACE ###
+puts "Let's create a team!"
+user_input = ""
+team = []
+
+while user_input != "N"
+	puts "Do you want to add a new player? (Y or N)."
+		user_input = gets.chomp.capitalize
+
+	if user_input == "Y"
+
+		puts "What is the name of your player?"
+		name = gets.chomp
+
+		puts "What is #{name}'s shooting rating (1-100)?"
+		shoot_rating = gets.to_i
+
+		puts "What is #{name}'s passing rating (1-100)?"
+		pass_rating = gets.to_i
+
+		puts "What is #{name}'s dribbling rating (1-100)?"
+		dribble_rating = gets.to_i
+
+		created_player = BasketballPlayer.new(name, shoot_rating, pass_rating, dribble_rating)
+
+		team << created_player
+
+	elsif user_input == "N"
+		puts ""
+		puts "TEAM CONSISTS OF:"
+
+			team.each do |player|
+			puts ""
+			puts "#{player.bio}"
+			end
+	break
+		
+	else
+		puts "please try again: would you like to make a player? (Y or N)."
+	end
+end
+
