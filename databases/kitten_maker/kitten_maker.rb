@@ -1,4 +1,4 @@
-# OPERATION KITTEN EXPLOSION!
+# OPERATION KITTEN EXPLOSION!!
 
 # talk about Object Relational Mapping (ORM)
 
