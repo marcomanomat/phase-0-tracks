@@ -61,6 +61,7 @@ OUTPUT:
 
 
 RELEASE 3
+INNER JOIN
 INPUT:
 select players.Name, players.Points, teams.Win
    ...> from teams
@@ -75,3 +76,19 @@ Jason|24|false
 Miggy|4|true
 Lebron|34|true
 Klay|34|true
+
+LEFT JOIN
+INPUT:
+select points, rebounds, assists, team
+   ...> from players
+   ...> left join teams
+   ...> on teams.id=players.team; 
+OUTPUT:
+14|4|6|3
+34|3|1|4
+24|1|2|3
+24|1|2|4
+4|14|2|2
+34|11|12|2
+34|4|4|1
+39|1|4|1
