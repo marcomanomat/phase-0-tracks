@@ -2,7 +2,7 @@ RELEASE 2
 
 2.) Join 3 tables
 INPUT:
-select *
+	SELECT *
    ...> FROM users
    ...> JOIN reviews
    ...> ON users.id=reviews.user_id
@@ -13,3 +13,19 @@ OUTPUT:
 4|Steven|Wonder|2|5|Excellent!|3|4|3|The Beagle Nightclub
 2|Mandy|Kaling|3|1|Horrible!|1|2|1|Grundy Hollow Wedding Chapel
 2|Mandy|Kaling|4|4|Really good!|4|2|4|Lotus Yoga
+
+3.)View just the user’s names, the business name, the star rating, and the comment.
+(pretty much just select the fields you want from the 3-join just created) 
+INPUT:
+	SELECT users.first_name, users.last_name, businesses.name, reviews.stars, 	reviews.comment
+   ...> FROM users
+   ...> JOIN reviews
+   ...> ON users.id=reviews.user_id
+   ...> JOIN businesses
+   ...> ON businesses.id=reviews.business_id;
+
+OUTPUT:
+Mandy|Kaling|Grundy Hollow Wedding Chapel|3|Great!
+Steven|Wonder|The Beagle Nightclub|5|Excellent!
+Mandy|Kaling|Grundy Hollow Wedding Chapel|1|Horrible!
+Mandy|Kaling|Lotus Yoga|4|Really good!
