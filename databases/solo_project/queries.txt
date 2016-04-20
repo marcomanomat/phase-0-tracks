@@ -1,0 +1,60 @@
+RELEASE 2
+
+1.)Display the information in one table (either table is fine).
+INPUT:
+select * from players;
+
+OUTPUT:
+1|JC|14|4|6|3
+2|DJ|34|3|1|4
+3|Allan|24|1|2|3
+4|Jason|24|1|2|4
+5|Miggy|4|14|2|2
+6|Lebron|34|11|12|2
+7|Klay|34|4|4|1
+
+2.)Update an item that meets some condition (you can choose a condition that makes sense).
+INPUT:
+sqlite> update players set Team=1 where Team="Warriors";
+sqlite> update players set Team=2 where Team="Cavs";
+sqlite> update players set Team=3 where Team="Knicks";
+sqlite> update players set Team=4 where Team="Nets";
+OUTPUT:
+1|JC|14|4|6|3
+2|DJ|34|3|1|4
+3|Allan|24|1|2|3
+4|Jason|24|1|2|4
+5|Miggy|4|14|2|2
+6|Lebron|34|11|12|2
+7|Klay|34|4|4|1
+8|Steph|44|0|2|1
+
+3.)Display the information in both tables using one query.
+INPUT:
+select * from players, teams where players.team = teams.ID;
+OUTPUT:
+1|JC|14|4|6|3|3|Knicks|false
+2|DJ|34|3|1|4|4|Nets|false
+3|Allan|24|1|2|3|3|Knicks|false
+4|Jason|24|1|2|4|4|Nets|false
+5|Miggy|4|14|2|2|2|Cavs|true
+6|Lebron|34|11|12|2|2|Cavs|true
+7|Klay|34|4|4|1|1|Warriors|true
+8|Steph|44|0|2|1|1|Warriors|true
+
+4.)Display a narrower selection of columns (fewer columns than all of them, in other words) from both tables using one query.
+INPUT:
+
+OUTPUT:
+
+5.)Delete an item that meets some condition (you can choose a condition that makes sense).
+INPUT:
+sqlite> delete from players where name="Steph";
+OUTPUT:
+1|JC|14|4|6|3
+2|DJ|34|3|1|4
+3|Allan|24|1|2|3
+4|Jason|24|1|2|4
+5|Miggy|4|14|2|2
+6|Lebron|34|11|12|2
+7|Klay|34|4|4|1
