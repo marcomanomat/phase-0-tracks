@@ -58,3 +58,20 @@ OUTPUT:
 5|Miggy|4|14|2|2
 6|Lebron|34|11|12|2
 7|Klay|34|4|4|1
+
+
+RELEASE 3
+INPUT:
+select players.Name, players.Points, teams.Win
+   ...> from teams
+   ...> inner join players
+   ...> on players.Team=teams.ID;
+
+OUTPUT:
+JC|14|false
+DJ|34|false
+Allan|24|false
+Jason|24|false
+Miggy|4|true
+Lebron|34|true
+Klay|34|true
