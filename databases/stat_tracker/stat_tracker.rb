@@ -39,21 +39,52 @@ def entering_opponent(basketballdb, team_name)
 	  basketballdb.execute("INSERT INTO opponents (team_name) VALUES (?)", [team_name])
 end
 
-	puts "To add a new player.."
-# create method to gather team name:
-def team
-	puts "\nPlease enter player's team:"		
-	team = gets.chomp.capitalize
-end
-# create method to gather team name:
-def name
+# ####USER INTERFACE####
+# input =""
+# 	puts "Would you like to 'add' or 'view' statistics?"
+# 	input = gets.chomp
+	
+# # create method to gather team name:
+# def team
+# 	puts "\nPlease enter player's team:"		
+# 	team = gets.chomp.capitalize
+# end
+# # create method to gather player full name:
+# def name
+# 		puts "Then, enter player's first name:"
+# 		first = gets.chomp.capitalize
+# 	puts "Finally, enter player's last name:"
+# 		last = gets.chomp.capitalize
+		
+# 		name = first+" "+last
+# end
+
+####USER INTERFACE####
+puts "Would you like to 'add' or 'view' statistics?"
+input =""
+
+while input != "view"
+	input = gets.chomp
+
+	if input == "add"
+
+		puts "Please enter player's team:"		
+		team = gets.chomp.capitalize
+	
 		puts "Then, enter player's first name:"
 		first = gets.chomp.capitalize
-	puts "Finally, enter player's last name:"
-		last = gets.chomp.capitalize
 		
+		puts "Finally, enter player's last name:"
+		last = gets.chomp.capitalize
+			
 		name = first+" "+last
+		
+	else
+		puts "press anything to end"
+		break
+	end
 end
-
+# plug input in to create tables:
 entering_player(basketballdb, team, name)
+#entering_opponent(basketballdb, team_name)
 
