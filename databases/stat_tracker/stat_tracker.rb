@@ -28,3 +28,8 @@ SQL
 # create (players, opponents) tables by calling execute on the database:
 basketballdb.execute(players_table)
 basketballdb.execute(opponents_table)
+
+# create methods to populate (players, opponents) tables before creating stats table
+def enter_player(db, team, name)
+	  db.execute("INSERT INTO players (team, name) VALUES (?, ?)", [team, name])
+end
