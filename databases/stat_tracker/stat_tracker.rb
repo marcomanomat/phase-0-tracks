@@ -36,6 +36,6 @@ def enter_player(db, team, name)
 end
 # enter opponent:
 def enter_opponent(db, team_name)
-	  db.execute("INSERT INTO players (team_name) VALUES (?)", [team_name])
+	  db.execute("INSERT INTO opponents (team_name) VALUES (?)", [team_name])
 end
 
