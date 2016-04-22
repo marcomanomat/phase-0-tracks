@@ -30,6 +30,12 @@ basketballdb.execute(players_table)
 basketballdb.execute(opponents_table)
 
 # create methods to populate (players, opponents) tables before creating stats table
+# enter player:
 def enter_player(db, team, name)
 	  db.execute("INSERT INTO players (team, name) VALUES (?, ?)", [team, name])
 end
+# enter opponent:
+def enter_opponent(db, team_name)
+	  db.execute("INSERT INTO players (team_name) VALUES (?)", [team_name])
+end
+
