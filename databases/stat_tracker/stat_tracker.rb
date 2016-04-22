@@ -76,8 +76,10 @@ while input != "view"
 		
 		puts "Finally, enter player's last name:"
 		last = gets.chomp.capitalize
-			
 		name = first+" "+last
+
+		puts "Enter opponent:"
+		team_name = gets.chomp
 		
 	else
 		puts "press anything to end"
@@ -86,5 +88,5 @@ while input != "view"
 end
 # plug input in to create tables:
 entering_player(basketballdb, team, name)
-#entering_opponent(basketballdb, team_name)
+entering_opponent(basketballdb, team_name)
 
