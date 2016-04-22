@@ -13,7 +13,7 @@ basketballdb.results_as_hash = true
 players_table = <<-SQL
 	CREATE TABLE IF NOT EXISTS players(
 		ID INTEGER PRIMARY KEY,
-		Team VARCHAR (255)
+		Team VARCHAR (255),
 		Name VARCHAR (255)
 	);
 SQL
@@ -24,3 +24,7 @@ opponents_table = <<-SQL
 		Team_name VARCHAR (255)
 	);
 SQL
+
+# create (players, opponents) tables by calling execute on the database:
+basketballdb.execute(players_table)
+basketballdb.execute(opponents_table)
