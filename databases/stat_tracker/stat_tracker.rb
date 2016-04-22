@@ -15,5 +15,12 @@ players_table = <<-SQL
 		ID INTEGER PRIMARY KEY,
 		Team VARCHAR (255)
 		Name VARCHAR (255)
-	)
+	);
+SQL
+# opponents variable:
+opponents_table = <<-SQL
+	CREATE TABLE IF NOT EXISTS opponents(
+		ID INTEGER PRIMARY KEY,
+		Team_name VARCHAR (255)
+	);
 SQL
