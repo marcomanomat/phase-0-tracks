@@ -31,11 +31,29 @@ basketballdb.execute(opponents_table)
 
 # create methods to populate (players, opponents) tables before creating stats table
 # enter player:
-def enter_player(db, team, name)
-	  db.execute("INSERT INTO players (team, name) VALUES (?, ?)", [team, name])
+def entering_player(basketballdb, team, name)
+	  basketballdb.execute("INSERT INTO players (team, name) VALUES (?, ?)", [team, name])
 end
 # enter opponent:
-def enter_opponent(db, team_name)
-	  db.execute("INSERT INTO opponents (team_name) VALUES (?)", [team_name])
+def entering_opponent(basketballdb, team_name)
+	  basketballdb.execute("INSERT INTO opponents (team_name) VALUES (?)", [team_name])
 end
+
+	puts "To add a new player.."
+# create method to gather team name:
+def team
+	puts "\nPlease enter player's team:"		
+	team = gets.chomp.capitalize
+end
+# create method to gather team name:
+def name
+		puts "Then, enter player's first name:"
+		first = gets.chomp.capitalize
+	puts "Finally, enter player's last name:"
+		last = gets.chomp.capitalize
+		
+		name = first+" "+last
+end
+
+entering_player(basketballdb, team, name)
 
