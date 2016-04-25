@@ -90,21 +90,21 @@ def add_teams
 			@teams.each { |team| puts "#{team}" }
 			puts "\nWould you like to add another team? 'Y' or 'N'"
 		elsif input == "N"
-			puts "You have finished entering all participating teams."
 			break
 		else
 			puts "Error: request denied"
 			puts "Would you like to add another team? 'Y' or 'N'"
 		end
 	end
-	puts "\nHere is a list of participating teams you have entered:"
-	@teams.each { |team| puts "#{team} - (TEAM #{@teams.index(team)+1})" }
+	@teams.each { |team| puts "#{team}" }
 	puts "-------------------------------------------------------"
 
 	@teams.each do |opp_team|
 		entering_opponent(@basketballdb, opp_team)
 	end
 	end
+
+
 
 
 def player_input
@@ -192,6 +192,16 @@ def opponent_id
 end
 opponent_id
 
+
+def teams_list
+	@teams_list = @basketballdb.execute("select Opp_team from opponents")
+	#@pplayers.each { |hash| puts "#{hash[0]} - #{hash[1]}" }
+end 
+	teams_list
+
+
+
+
 def stats_input
 
 	puts "\nTo enter stats, first choose a team. "
@@ -208,12 +218,14 @@ def stats_input
 	input = gets.chomp.capitalize
 
 		if input == "Y"
-			puts "Select their opponent:"
+			puts "Select an opponent:"
+			@teams_list.each { |hash| puts "*#{hash[0]}" }
 			opponent_input = gets.chomp.split.map(&:capitalize).join(' ')
 			opponent_id  = @opp_hash[opponent_input]
 			#roster = @roster_players[chosen_team]
 			#puts "Here is the roster: #{roster}"
 			puts "\nPlease select a player on the #{chosen_team}."
+			@roster.each { |name| puts "*#{name}" }
 			player = gets.chomp.split.map(&:capitalize).join(' ')
 			player_id = @id_hash[player]
 			puts "Enter total points:"
@@ -237,6 +249,25 @@ def stats_input
 	end
  @teams.length.times { stats_input } 
 
+def vs_opp
+	# creates a hash that has multiple values for one key!
+	@vs_hash = Hash.new { |hash, key| hash[key] = [] }
+	@vs = @basketballdb.execute("select opponents.opp_team, players.name from players join stats on players.id=stats.player_id join opponents on opponents.id=stats.opponent_id;")
+	@vs.each { |hash| @vs_hash[hash[1]] << hash[0]}
+	@vs_hash
+end
+vs_opp
+
+def players_list
+	@pplayers = @basketballdb.execute("select Name, Team from players")
+	#@pplayers.each { |hash| puts "#{hash[0]} - #{hash[1]}" }
+
+end 
+	players_list
+
+
+
+
 
 #create all_players method for view_stats 
 def all_players
@@ -246,8 +277,11 @@ def all_players
 end
 all_players
 
+
 def view_stats
-puts "To view the stats, please select a player or type 'Exit' to exit program"
+puts "To view the stats, please type in player's name or type 'Exit' to exit program"
+puts "Here is the player list:" 
+@pplayers.each { |hash| puts "*#{hash[0]} - #{hash[1]}" }
 player_stat = gets.chomp.split.map(&:capitalize).join(' ')
 player_id = @id_hash[player_stat]
 
@@ -255,24 +289,29 @@ player_id = @id_hash[player_stat]
 
 
 		if @all_players.include?(player_stat) == true
-			puts "Select opponent you would like to see #{player_stat}'s stats against:"
+			puts "\nSelect the opponent you would like to see #{player_stat}'s stats against:"
+			teams = @vs_hash[player_stat]
+			teams.each { |team| puts "*#{team}" }
 			#also add, something if they havent played opponent
 			opp = gets.chomp.split.map(&:capitalize).join(' ')
 			opp_id = @opp_hash[opp]
 			stats = @basketballdb.execute("SELECT stats.points, stats.rebounds, stats.assists, opponents.opp_team FROM players JOIN stats ON players.id=stats.player_id JOIN opponents ON opponents.id=stats.opponent_id WHERE players.id = #{player_id} and opponent_id = #{opp_id}")
 			stats.each { |hash| puts "#{player_stat}'s stats against the #{hash[3]}:\nPoints: #{hash[0]}\nRebounds: #{hash[1]}\nAssists: #{hash[2]}" }
-			puts "Would you like to view another? 'Y' or 'N'."
+			puts "\nWould you like to view another? 'Y' or 'N'."
 			input = ""
 			input = gets.chomp.capitalize
 				if input == "Y"
+				puts "Here is the player list:" 
+				@pplayers.each { |hash| puts "*#{hash[0]} - #{hash[1]}" }
 				puts "\nPlease select another player:"
 				player_stat = gets.chomp.split.map(&:capitalize).join(' ')
 			    player_id = @id_hash[player_stat]
 				elsif input == "N"
+				puts "Thank you for using Statistics Tracker!"
 				break
 				end
 		elsif input == "N"
-			puts "\n You are finished viewing, thank you!"
+			puts "\n Thank you for using Statistics Tracker!"
 			break
 		else
 			puts "Error: request denied"
@@ -282,7 +321,6 @@ player_id = @id_hash[player_stat]
 end
 
 view_stats
-
 
 
 
