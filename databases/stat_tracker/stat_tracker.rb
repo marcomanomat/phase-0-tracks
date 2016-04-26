@@ -1,4 +1,4 @@
-# Statistics Tracker [Basketball Tournament Edition - Beta]
+# Statistics Tracker [Basketball Tournament Edition - Beta][Ruby]
 
 #Note: As a new user, please enter ALL teams, players, stats at once.
 # can add new players, teams and stats to existing database
