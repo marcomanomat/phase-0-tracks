@@ -1,4 +1,8 @@
-# Statistics Tracker [Basketball Tourney Ed.]
+# Statistics Tracker [Basketball Tournament Edition - Beta]
+
+#Note: As a new user, please enter ALL teams, players, stats at once.
+# can add new players, teams and stats to existing database
+# cannot edit existing teams, players, and stats, yet
 
 # require database gem
 require 'sqlite3'
@@ -66,14 +70,14 @@ end
 
 ######## USER INTERFACE #######
 
-# ask for user name
+# ask for user name; will add to user database if it is a new/unique username
 puts "Welcome to Statistics Tracker!"
 puts "Please enter USER's name:"
 	username = gets.chomp.split.map(&:capitalize).join(' ')
 
 if array_users.include?(username)
 	puts "\nWelcome back to Statistics Tracker, #{username}!"
-	puts "Enter 'Y' to add more teams or 'N' to edit/view previous stats."
+	puts "Enter 'Y' to add more teams or 'N' to view previous stats."
 
 else
 	users(@basketballdb, username)
@@ -84,7 +88,7 @@ else
 end
 
 
-# create method for adding teams while creating table
+# create method for: populating opponents/(teams) table with a loop
 def add_teams
 	input = ""
 	@teams = []
@@ -111,7 +115,7 @@ def add_teams
 	end
 	@teams.each { |team| puts "#{team}" }
 	puts "-------------------------------------------------------"
-
+	# part of add_teams method where opponens table is being populated:
 	@teams.each do |opp_team|
 		entering_opponent(@basketballdb, opp_team)
 	end
@@ -119,7 +123,7 @@ def add_teams
 end
 
 
-
+# create method for: populating players table with a loop
 def player_input
 	puts "\nPlease select team to add roster to:"
 	@teams.each { |team| puts "*#{team}" }
@@ -141,8 +145,10 @@ def player_input
 			puts "\nPlease add player to the #{@team}' roster:"
 			@name = gets.chomp.split.map(&:capitalize).join(' ')
 			@roster << @name
+
 			puts "\nPlayers added to the #{@team}' Roster:"
 			@roster.each { |name| puts "*#{name}" }
+
 			puts "\nWould you like to add another player to the #{@team}'s roster? 'Y' or 'N'."
 
 		elsif input == "N"
@@ -158,7 +164,7 @@ def player_input
 		end
 
 	end
-
+	# part of player_input method where players table is being populated:
 	@roster.each do |name|
 		entering_player(@basketballdb, @team, name)
 	end
@@ -188,7 +194,8 @@ SQL
 @basketballdb.execute(stats_table)
 
 
-
+# create method to populate stats tables
+# enter stats:
 def entering_stats(basketballdb, points, rebounds, assists, player_id, opponent_id)
 	  basketballdb.execute("INSERT INTO stats (points, rebounds, assists, player_id, opponent_id) 
 	  	VALUES (?, ?, ?, ?, ?)", [points, rebounds, assists, player_id, opponent_id])
@@ -196,7 +203,7 @@ end
 
 
 
-# make method to make a player => id hash
+# create method to make a "player => id" hash
 def player_id
 	@id_hash = {}
 	@rosters = @basketballdb.execute("select *from players")
@@ -205,7 +212,7 @@ def player_id
 end
 	player_id
 
-# make method to make a oppenent => id hash
+# create method to make an "oppenent => id" hash
 def opponent_id
 	@opp_hash = {}
 	@opponent = @basketballdb.execute("select *from opponents")
@@ -214,18 +221,16 @@ def opponent_id
 end
 	opponent_id
 
-
+# create method to list all teams in database
 def teams_list
 	@teams_list = @basketballdb.execute("select Opp_team from opponents")
-	#@pplayers.each { |hash| puts "#{hash[0]} - #{hash[1]}" }
 end 
 	teams_list
 
 
 
-
+# create method for: populating stats table with a loop
 def stats_input
-
 	puts "\nTo enter stats, first choose a team. "
 	@teams.each { |team| puts "*#{team}" }
 	chosen_team = gets.chomp.split.map(&:capitalize).join(' ')
@@ -262,9 +267,11 @@ def stats_input
 
 			puts "Enter total assists:"
 			assists = gets.chomp.to_i
+			# part of stats_input method where stats table is being populated:
 			entering_stats(@basketballdb, points, rebounds, assists, player_id, opponent_id)
 
 			puts "Would you like to continue adding stats for the #{chosen_team}? 'Y' or 'N'."
+
 		elsif input == "N"
 			puts "\nYou have finished entering stats for all players on #{chosen_team}."
 			puts "-------------------------------------------------------"
@@ -276,11 +283,10 @@ def stats_input
 		end
 	end
 end
-
 # call method:
  @teams.length.times { stats_input } 
 
-
+# create method to view which teams each player has played against
 def vs_opp
 	# creates a hash that has multiple values for one key!:
 	@vs_hash = Hash.new { |hash, key| hash[key] = [] }
@@ -290,7 +296,7 @@ def vs_opp
 end
 	vs_opp
 
-
+# create method to view full player - team list
 def players_list
 	@pplayers = @basketballdb.execute("select Name, Team from players")
 end 
@@ -298,7 +304,7 @@ end
 
 
 
-#create all_players method for view_stats 
+# create method to make an array for an ".include?" for the if player input is in the datebase
 def all_players
 	@all_players = []
 	players = @basketballdb.execute("select name from players")
@@ -307,7 +313,7 @@ end
 	all_players
 
 
-
+# create method for viewing stats of any player in database, with a loop:
 def view_stats
 puts "To view the stats, please type in player's name or type 'Exit' to exit program"
 puts "Here is the player list:" 
@@ -324,7 +330,7 @@ player_id = @id_hash[player_stat]
 			teams.each { |team| puts "*#{team}" }
 			opp = gets.chomp.split.map(&:capitalize).join(' ')
 			opp_id = @opp_hash[opp]
-
+			# call execute on the database in order to show stats to be more user readable:
 			stats = @basketballdb.execute("SELECT stats.points, stats.rebounds, stats.assists, opponents.opp_team FROM players JOIN stats ON players.id=stats.player_id JOIN opponents ON opponents.id=stats.opponent_id WHERE players.id = #{player_id} and opponent_id = #{opp_id}")
 			stats.each { |hash| puts "#{player_stat}'s stats against the #{hash[3]}:\nPoints: #{hash[0]}\nRebounds: #{hash[1]}\nAssists: #{hash[2]}" }
 
