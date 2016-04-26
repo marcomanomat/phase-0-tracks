@@ -5,10 +5,11 @@ require 'sqlite3'
 
 # create database
 @basketballdb = SQLite3::Database.new("basketball.db")
+
 # deliver data as a hash data structure (formula found on sql docs)
 @basketballdb.results_as_hash = true
 
-# create 3 variables in order to create tables in database for: players, stats, opponents
+# create first 2 (out of 3) variables in order to create tables in database for: players, stats, opponents, users
 # players variable:
 players_table = <<-SQL
 	CREATE TABLE IF NOT EXISTS players(
@@ -25,33 +26,34 @@ opponents_table = <<-SQL
 	);
 SQL
 
+# users variable:
 user_table = <<-SQL
 	CREATE TABLE IF NOT EXISTS users(
 		Username VARCHAR (255)
 	);
 SQL
 
-
-
-# create (players, opponents) tables by calling execute on the database:
+# create (players, opponents, users) tables by calling execute on the database:
 @basketballdb.execute(players_table)
 @basketballdb.execute(opponents_table)
 @basketballdb.execute(user_table)
 
-# create methods to populate (players, opponents) tables before creating stats table
+# create methods to populate (players, opponents, users) tables before creating stats table
 # enter player:
 def entering_player(basketballdb, team, name)
-	  basketballdb.execute("INSERT INTO players (team, name) VALUES (?, ?)", [team, name])
+	basketballdb.execute("INSERT INTO players (team, name) VALUES (?, ?)", [team, name])
 end
 # enter opponent:
 def entering_opponent(basketballdb, opp_team)
-	  basketballdb.execute("INSERT INTO opponents (opp_team) VALUES (?)", [opp_team])
+	basketballdb.execute("INSERT INTO opponents (opp_team) VALUES (?)", [opp_team])
 end
-
+# enter users:
 def users(basketballdb, username)
 	basketballdb.execute("INSERT INTO users (username) VALUES (?)", [username])
 end
 
+
+# create method to make an array for an ".include?" for the USER name input:
 def array_users
 	@all_users= []
 	users = @basketballdb.execute("select username from users")
@@ -60,13 +62,19 @@ def array_users
 end
 	array_users
 
-####USER INTERFACE####
+
+
+######## USER INTERFACE #######
+
+# ask for user name
 puts "Welcome to Statistics Tracker!"
-puts "Please enter administrator's name:"
-username = gets.chomp.split.map(&:capitalize).join(' ')
+puts "Please enter USER's name:"
+	username = gets.chomp.split.map(&:capitalize).join(' ')
+
 if array_users.include?(username)
 	puts "\nWelcome back to Statistics Tracker, #{username}!"
 	puts "Enter 'Y' to add more teams or 'N' to edit/view previous stats."
+
 else
 	users(@basketballdb, username)
 	puts "\nWelcome to Statistics Tracker!"
@@ -75,6 +83,8 @@ else
 	puts "\nEnter 'Y' to continue or 'N' to edit/view previous stats"
 end
 
+
+# create method for adding teams while creating table
 def add_teams
 	input = ""
 	@teams = []
@@ -89,12 +99,15 @@ def add_teams
 			puts "\nTeams added:"
 			@teams.each { |team| puts "#{team}" }
 			puts "\nWould you like to add another team? 'Y' or 'N'"
+
 		elsif input == "N"
 			break
+
 		else
 			puts "Error: request denied"
 			puts "Would you like to add another team? 'Y' or 'N'"
 		end
+
 	end
 	@teams.each { |team| puts "#{team}" }
 	puts "-------------------------------------------------------"
@@ -102,8 +115,8 @@ def add_teams
 	@teams.each do |opp_team|
 		entering_opponent(@basketballdb, opp_team)
 	end
-	end
 
+end
 
 
 
@@ -114,42 +127,50 @@ def player_input
 	@roster = []
 
 
-	if @teams.include?(@team) == false
-	input = ""
-		puts "\nThat team is not listed, please select team from list"
-	else
-		puts "\nYou have selected #{@team}, would you like to continue? 'Y' or 'N'."
+		if @teams.include?(@team) == false
+		input = ""
+			puts "\nThat team is not listed, please select team from list"
 
-while input != "N"
-input = gets.chomp.capitalize
+		else
+			puts "\nYou have selected #{@team}, would you like to continue? 'Y' or 'N'."
+
+	while input != "N"
+	input = gets.chomp.capitalize
 	
-	if input == "Y"
-		puts "\nPlease add player to the #{@team}' roster:"
-		@name = gets.chomp.split.map(&:capitalize).join(' ')
-		@roster << @name
-		puts "\nPlayers added to the #{@team}' Roster:"
-		@roster.each { |name| puts "*#{name}" }
-		puts "\nWould you like to add another player to the #{@team}'s roster? 'Y' or 'N'."
-	elsif input == "N"
-		puts "\nYou have finished entering the roster for the #{@team}."
-		puts "\nTeams and rosters are now set!"
-		break
-	else
-		puts "Error: request denied"
-		puts "Would you like to add another player to the #{@team}'s roster? 'Y' or 'N'."
-	end
-end
-end
-@roster.each do |name|
-	entering_player(@basketballdb, @team, name)
-end
-end
+		if input == "Y"
+			puts "\nPlease add player to the #{@team}' roster:"
+			@name = gets.chomp.split.map(&:capitalize).join(' ')
+			@roster << @name
+			puts "\nPlayers added to the #{@team}' Roster:"
+			@roster.each { |name| puts "*#{name}" }
+			puts "\nWould you like to add another player to the #{@team}'s roster? 'Y' or 'N'."
 
-# #call methods
+		elsif input == "N"
+			puts "\nYou have finished entering the roster for the #{@team}."
+			puts "\nTeams and rosters are now set!"
+			break
+
+		else
+			puts "Error: request denied"
+			puts "Would you like to add another player to the #{@team}'s roster? 'Y' or 'N'."
+		end
+
+		end
+
+	end
+
+	@roster.each do |name|
+		entering_player(@basketballdb, @team, name)
+	end
+
+end
+# call methods: add_teams, player_input (method's loop will run for how ever many teams are inputed)
 add_teams
 @teams.length.times { player_input }
 
 
+# create method to populate stats last of tables (4 - total)
+# stats variable:
 stats_table = <<-SQL
 	CREATE TABLE IF NOT EXISTS stats(
 		ID INTEGER PRIMARY KEY,
@@ -163,6 +184,7 @@ stats_table = <<-SQL
 	);
 SQL
 
+# create stats table by calling execute on the database:
 @basketballdb.execute(stats_table)
 
 
@@ -181,7 +203,7 @@ def player_id
 	@rosters.each { |hash| @id_hash[hash[2]] = hash[0] }
 	@id_hash
 end
-player_id
+	player_id
 
 # make method to make a oppenent => id hash
 def opponent_id
@@ -190,7 +212,7 @@ def opponent_id
 	@opponent.each { |hash| @opp_hash[hash[1]] = hash[0] }
 	@opp_hash
 end
-opponent_id
+	opponent_id
 
 
 def teams_list
@@ -209,34 +231,41 @@ def stats_input
 	chosen_team = gets.chomp.split.map(&:capitalize).join(' ')
 
 		if @teams.include?(chosen_team) == false
-		input = ""
+			input = ""
 			puts "\nThat team is not listed, please select team from list"
 			@teams.each { |team| print "(#{team})" }
+
 		else
 			puts "\nYou have selected #{chosen_team} to add stats to, would you like to continue? 'Y' or 'N'."
+
 	while input != "N"
-	input = gets.chomp.capitalize
+
+			input = gets.chomp.capitalize
 
 		if input == "Y"
+
 			puts "Select an opponent:"
 			@teams_list.each { |hash| puts "*#{hash[0]}" }
 			opponent_input = gets.chomp.split.map(&:capitalize).join(' ')
 			opponent_id  = @opp_hash[opponent_input]
-			#roster = @roster_players[chosen_team]
-			#puts "Here is the roster: #{roster}"
+
 			puts "\nPlease select a player on the #{chosen_team}."
 			@roster.each { |name| puts "*#{name}" }
 			player = gets.chomp.split.map(&:capitalize).join(' ')
 			player_id = @id_hash[player]
+
 			puts "Enter total points:"
 			points = gets.chomp.to_i
+
 			puts "Enter total rebounds:"
 			rebounds = gets.chomp.to_i
+
 			puts "Enter total assists:"
 			assists = gets.chomp.to_i
 			entering_stats(@basketballdb, points, rebounds, assists, player_id, opponent_id)
+
 			puts "Would you like to continue adding stats for the #{chosen_team}? 'Y' or 'N'."
-			elsif input == "N"
+		elsif input == "N"
 			puts "\nYou have finished entering stats for all players on #{chosen_team}."
 			puts "-------------------------------------------------------"
 			break
@@ -244,28 +273,28 @@ def stats_input
 			puts "Error: request denied"
 			puts "Would you like to continue adding stats to the #{chosen_team}? 'Y' or 'N'."
 		end
+		end
 	end
-	end
-	end
+end
+
+# call method:
  @teams.length.times { stats_input } 
 
+
 def vs_opp
-	# creates a hash that has multiple values for one key!
+	# creates a hash that has multiple values for one key!:
 	@vs_hash = Hash.new { |hash, key| hash[key] = [] }
 	@vs = @basketballdb.execute("select opponents.opp_team, players.name from players join stats on players.id=stats.player_id join opponents on opponents.id=stats.opponent_id;")
 	@vs.each { |hash| @vs_hash[hash[1]] << hash[0]}
 	@vs_hash
 end
-vs_opp
+	vs_opp
+
 
 def players_list
 	@pplayers = @basketballdb.execute("select Name, Team from players")
-	#@pplayers.each { |hash| puts "#{hash[0]} - #{hash[1]}" }
-
 end 
 	players_list
-
-
 
 
 
@@ -275,7 +304,8 @@ def all_players
 	players = @basketballdb.execute("select name from players")
 	players.each { |hash| @all_players << hash["Name"]}
 end
-all_players
+	all_players
+
 
 
 def view_stats
@@ -292,11 +322,12 @@ player_id = @id_hash[player_stat]
 			puts "\nSelect the opponent you would like to see #{player_stat}'s stats against:"
 			teams = @vs_hash[player_stat]
 			teams.each { |team| puts "*#{team}" }
-			#also add, something if they havent played opponent
 			opp = gets.chomp.split.map(&:capitalize).join(' ')
 			opp_id = @opp_hash[opp]
+
 			stats = @basketballdb.execute("SELECT stats.points, stats.rebounds, stats.assists, opponents.opp_team FROM players JOIN stats ON players.id=stats.player_id JOIN opponents ON opponents.id=stats.opponent_id WHERE players.id = #{player_id} and opponent_id = #{opp_id}")
 			stats.each { |hash| puts "#{player_stat}'s stats against the #{hash[3]}:\nPoints: #{hash[0]}\nRebounds: #{hash[1]}\nAssists: #{hash[2]}" }
+
 			puts "\nWould you like to view another? 'Y' or 'N'."
 			input = ""
 			input = gets.chomp.capitalize
@@ -306,9 +337,11 @@ player_id = @id_hash[player_stat]
 				puts "\nPlease select another player:"
 				player_stat = gets.chomp.split.map(&:capitalize).join(' ')
 			    player_id = @id_hash[player_stat]
+
 				elsif input == "N"
 				puts "Thank you for using Statistics Tracker!"
 				break
+
 				end
 		elsif input == "N"
 			puts "\n Thank you for using Statistics Tracker!"
@@ -319,23 +352,9 @@ player_id = @id_hash[player_stat]
 		end
 	end
 end
-
+#call method:
 view_stats
 
 
-
-
-
-
-
-
-#show player's opponents
-#select opponent
-#if they havent played, put in error
-#would you like to edit stats?
-
-
-
-#@basketballdb.execute("select * from opponents")
 
 
