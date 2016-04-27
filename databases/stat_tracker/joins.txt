@@ -1,0 +1,26 @@
+SELECT players.name, players.team, stats.points, stats.rebounds, stats.assists, opponents.opp_team
+FROM players
+JOIN stats
+ON players.id=stats.player_id
+JOIN opponents
+ON opponents.id=stats.opponent_id
+
+SELECT players.team, players.name, stats.points, stats.rebounds, stats.assists
+FROM players
+JOIN stats
+ON players.id=stats.player_id
+JOIN opponents
+ON opponents.id=stats.opponent_id
+WHERE players.id = 1 and opponent_id = 3
+
+SELECT stats.points, stats.rebounds, stats.assists, opponents.opp_team
+FROM players
+JOIN stats
+ON players.id=stats.player_id
+JOIN opponents
+ON opponents.id=stats.opponent_id
+WHERE players.id = 1 and opponent_id = 3
+
+SELECT stats.points, stats.rebounds, stats.assists, opponents.opp_team FROM players JOIN stats ON players.id=stats.player_id JOIN opponents ON opponents.id=stats.opponent_id WHERE players.id = 1 and opponent_id = 3;
+
+select opponents.opp_team, players.name from players join stats on players.id=stats.player_id join opponents on opponents.id=stats.opponent_id;
