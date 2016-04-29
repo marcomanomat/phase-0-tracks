@@ -1,6 +1,7 @@
 # require gems
 require 'sinatra'
 require 'sqlite3'
+require 'shotgun'
 
 db = SQLite3::Database.new("students.db")
 db.results_as_hash = true
@@ -44,3 +45,35 @@ get '/students/:id' do
   student = db.execute("SELECT * FROM students WHERE id=?", [params[:id]])[0]
   student.to_s
 end
+
+# Release: 0: Add Routes
+# 1. A /contact route that displays an address(make up the addy)
+get '/contact' do
+  "123 Fake Street."
+end
+
+# 2. A /great_job route that can take a person's name as a query parameter....
+# http://localhost:4567/great_job/?name=Steve
+get '/great_job/' do
+name = params[:name]
+  if name
+  "Good job, #{name}!!"
+  else
+  "Good job!!"
+  end
+end
+
+# 3. 
+# http://localhost:4567/1/add/2
+get '/:num1/add/:num2' do
+  num1 = "#{params[:num1]}".to_i
+  num2 = "#{params[:num2]}".to_i
+  add = num1 + num2
+  "#{add}"
+end
+
+# 4.
+
+
+
+
