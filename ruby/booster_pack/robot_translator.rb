@@ -2,6 +2,7 @@
 
 # If a letter is capitalized and it's in the first half of the alphabet, it becomes: "bloop".
 # A - M (1st half); N - Z (2nd half)
+# Hint, watch for capitals! - have to use .downcase/.capitalize when needed
 
 # Otherwise, if a letter is capitalized or it's the letter "e", it becomes: "buzz".
 
