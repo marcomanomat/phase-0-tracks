@@ -12,6 +12,7 @@
 # "Happy Halloween!" => "bloopbeepbeepbeepbeepboingbloopbeepbeepbeepbeepbeepbuzzbuzzbeepboing"
 
 alpha = "abcdefghijklmnopqrstuvwxyz"
+#alpha.length/2
 half_1 = alpha[0..12]
 half_2 = alpha[13..26]
 
@@ -20,13 +21,11 @@ separated_letter_array = word.split("")
 
 new_array = []
 separated_letter_array.each do |letter|
-	if 
-		half_1.include?(letter.downcase) && letter == letter.capitalize
-		new_array << "bloop"
+	if half_1.include?(letter.downcase) && letter == letter.capitalize
+	   new_array << "bloop"
 	elsif
-		unless alpha.include?(letter)
+		!alpha.include?(letter)
 		new_array << "boing"
-		end
 	elsif
 		letter == letter.capitalize || letter == "e"
 		new_array << "buzz"
